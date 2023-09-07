@@ -1,15 +1,15 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 
-public class BlobIndex 
+
+public class Blob 
 {
-    public BlobIndex ()
+    public Blob ()
     {
         //some constructor ig?
     }
@@ -19,7 +19,14 @@ public class BlobIndex
     {
         String sha1 = getSHA1 (fileName); //sha1 will be the name of the new file
 
-        PrintWriter writer = new PrintWriter (sha1);
+        String dirName = "objects"; /* something to pull specified dir from input */;
+        //String fName = sha1;
+        File dir = new File (dirName);
+        File actualFile = new File (dirName, sha1); //file you write to
+            //dirName should become directory, sha1 should become file under directory
+        dir.mkdirs();
+
+        PrintWriter writer = new PrintWriter (actualFile.getName());
 
         BufferedReader reader = new BufferedReader (new FileReader (fileName));
         StringBuilder sb = new StringBuilder ("");
@@ -32,6 +39,7 @@ public class BlobIndex
 
         writer.println (sb.toString());
         writer.close();
+
     }
 
     //reads in a file's content's and returns the sha1 of it

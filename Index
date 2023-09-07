@@ -1,0 +1,25 @@
+public class Index
+{
+    private HashMap <String, String> index;
+
+    public Index ()
+    {
+        //some constructor ig
+        index = new HashMap <String, String> ();
+
+    }
+
+    //initializes a project
+    public void init (String pName) //pName = project name
+    {
+        
+    }
+
+    public void addBlob (String fileName)
+    {
+        Blob b = new Blob ();
+        String sha1 = b.getShA1 ();
+    }
+
+
+}
