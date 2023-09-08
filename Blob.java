@@ -27,12 +27,15 @@ public class Blob
     {
         String sha1 = getSHA1 (); //sha1 will be the name of the new file
 
-        String dirName = "objects"; /* something to pull specified dir from input */;
         //String fName = sha1;
-        File dir = new File (dirName);
-        File actualFile = new File (dirName, sha1); //file you write to
-            //dirName should become directory, sha1 should become file under directory
+        File dir = new File ("objects");
         dir.mkdirs();
+
+        //File actualFile = new File (sha1); //file you write to
+            //objects should become directory, sha1 should become file under directory
+
+        File actualFile = new File ("objects/" + sha1);
+        actualFile.createNewFile();
 
         PrintWriter writer = new PrintWriter (actualFile.getName());
 
