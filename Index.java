@@ -17,7 +17,7 @@ public class Index
     }
 
     //initializes a project
-    public void init ()
+    public void init () throws IOException
     {
         //new code
         File f = new File ("objects");
@@ -35,7 +35,10 @@ public class Index
         //if index doesn't exist, make a new one
         if (!in.exists())
         {
-            in = new File ("objects", "index");
+            //in = new File ("objects", "index");
+
+            in = new File ("objects/" + "index");
+            in.createNewFile();
         }
     }
 
