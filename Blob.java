@@ -9,15 +9,23 @@ import java.security.MessageDigest;
 
 public class Blob 
 {
-    public Blob ()
+    private static String fileName; //the original name of the file (unhashed)
+
+    public Blob (String fName)
     {
         //some constructor ig?
+        fileName = fName;
+    }
+
+    public String getName ()
+    {
+        return fileName;
     }
 
     //turns file on disk into a blob
-    public static void blobify (String fileName) throws IOException
+    public void blobify () throws IOException
     {
-        String sha1 = getSHA1 (fileName); //sha1 will be the name of the new file
+        String sha1 = getSHA1 (); //sha1 will be the name of the new file
 
         String dirName = "objects"; /* something to pull specified dir from input */;
         //String fName = sha1;
@@ -44,7 +52,7 @@ public class Blob
 
     //reads in a file's content's and returns the sha1 of it
     //imma be honest i don't really know why this works, but it runs, soooooo
-    public static String getSHA1 (String fileName) throws IOException
+    public static String getSHA1 () throws IOException
     {
         BufferedReader reader = new BufferedReader (new FileReader (fileName));
         StringBuilder sb = new StringBuilder ("");
@@ -75,8 +83,9 @@ public class Blob
 
     public static void main (String [] args) throws IOException
     {
+        Blob bob = new Blob ("testingFile.txt");
         //System.out.println (getSHA1 ("testingFile.txt"));
-        blobify ("testingFile.txt");
+        bob.blobify ();
     }
 
 }
