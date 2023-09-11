@@ -22,7 +22,7 @@ public class Blob
         return fileName;
     }
 
-    //turns file on disk into a blob
+    //turns file on disk into a blob and writes to objects
     public void blobify () throws IOException
     {
         //initlizes before adding
@@ -34,8 +34,6 @@ public class Blob
         String sha1 = getSHA1 ();
 
         File actualFile = new File ("objects/" + sha1);
-        
-        // actualFile.createNewFile();
 
         PrintWriter writer = new PrintWriter (actualFile);
 
