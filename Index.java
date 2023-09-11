@@ -23,21 +23,20 @@ public class Index
         File f = new File ("objects");
 
         //if directory doesn't exist, make a new one
-        if (!f.exists() || !f.isDirectory ())
+        if (!f.exists())
         {
-            String dirName = "objects"; /* something to pull specified dir from input */;
-            File dir = new File (dirName);
+            File dir = new File ("objects");
             dir.mkdirs();
         }
 
-        File in = new File ("objects");
+        File in = new File ("index");
 
         //if index doesn't exist, make a new one
         if (!in.exists())
         {
             //in = new File ("objects", "index");
 
-            in = new File ("objects/" + "index");
+            in = new File ("index");
             in.createNewFile();
         }
     }
@@ -84,10 +83,10 @@ public class Index
     {
         Index testList = new Index ();
         testList.init ();
-        testList.addBlob ("testingFile.txt");
-        testList.addBlob ("test2.txt");
-        testList.removeBlob ("testingFile.txt");
-        testList.removeBlob ("test2.txt");
+        // testList.addBlob ("testingFile.txt");
+        // testList.addBlob ("test2.txt");
+        // testList.removeBlob ("testingFile.txt");
+        // testList.removeBlob ("test2.txt");
     }
 
 }
