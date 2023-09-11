@@ -25,21 +25,21 @@ public class Blob
     //turns file on disk into a blob
     public void blobify () throws IOException
     {
-        String sha1 = getSHA1 (); //sha1 will be the name of the new file
+        //initlizes before adding
+        Index cool = new Index();
+        cool.init();
+        
+        //All code below is to write to objects file
 
-        //String fName = sha1;
-        File dir = new File ("objects");
-        dir.mkdirs();
-
-        //File actualFile = new File (sha1); //file you write to
-            //objects should become directory, sha1 should become file under directory
+        String sha1 = getSHA1 ();
 
         File actualFile = new File ("objects/" + sha1);
-        actualFile.createNewFile();
+        
+        // actualFile.createNewFile();
 
-        PrintWriter writer = new PrintWriter (actualFile.getName());
+        PrintWriter writer = new PrintWriter (actualFile);
 
-        BufferedReader reader = new BufferedReader (new FileReader (fileName));
+        BufferedReader reader = new BufferedReader (new FileReader (getName()));
         StringBuilder sb = new StringBuilder ("");
 
         while (reader.ready())
@@ -50,6 +50,8 @@ public class Blob
 
         writer.println (sb.toString());
         writer.close();
+
+        
 
     }
 

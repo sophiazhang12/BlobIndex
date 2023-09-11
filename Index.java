@@ -44,6 +44,7 @@ public class Index
     public void addBlob (String fileName) throws IOException
     {
         Blob b = new Blob (fileName);
+        //blobify writes the blob to objects
         b.blobify ();
         String ogName = b.getName ();
         String sha1 = b.getSHA1 ();
@@ -83,10 +84,9 @@ public class Index
     {
         Index testList = new Index ();
         testList.init ();
-        // testList.addBlob ("testingFile.txt");
-        // testList.addBlob ("test2.txt");
-        // testList.removeBlob ("testingFile.txt");
-        // testList.removeBlob ("test2.txt");
+        testList.addBlob ("test.txt");
+        testList.addBlob ("test1.txt");
+        testList.removeBlob ("test.txt");
     }
 
 }
