@@ -109,9 +109,9 @@ public class Index
     {
         Index testList = new Index ();
         testList.init ();
-        testList.addBlob ("test.txt");
-        testList.addBlob ("test1.txt");
-        testList.removeBlob ("test.txt");
+        // testList.addBlob ("test.txt");
+        // testList.addBlob ("test1.txt");
+        // testList.removeBlob ("test.txt");
     }
 
 }
