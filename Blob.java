@@ -31,7 +31,7 @@ public class Blob
         
         //All code below is to write to objects file
 
-        String sha1 = getSHA1 ();
+        String sha1 = getSHA1(fileName);
 
         File actualFile = new File ("objects/" + sha1);
 
@@ -55,9 +55,9 @@ public class Blob
 
     //reads in a file's content's and returns the sha1 of it
     //imma be honest i don't really know why this works, but it runs, soooooo
-    public String getSHA1 () throws IOException
+    public String getSHA1 (String f) throws IOException
     {
-        BufferedReader reader = new BufferedReader (new FileReader (fileName));
+        BufferedReader reader = new BufferedReader (new FileReader (f));
         StringBuilder sb = new StringBuilder ("");
 
         while (reader.ready())

@@ -47,11 +47,36 @@ public class Index
         //blobify writes the blob to objects
         b.blobify ();
         String ogName = b.getName ();
-        String sha1 = b.getSHA1 ();
+        String sha1 = b.getSHA1(fileName);
 
         ind.put (ogName, sha1);
 
         PrintWriter pw = new PrintWriter ("index");
+
+        //updates the entire index... a little excessive, but it works
+        for (HashMap.Entry <String, String> entry : ind.entrySet ())
+            {
+                pw.println (entry.getKey () + " : " + entry.getValue ());
+            }
+
+        //pw.println (ogName + " : " + sha1);
+
+        //reader.close();
+        pw.close();
+
+    }
+
+    public void addToPath(String fileName, String path) throws IOException
+    {
+        Blob b = new Blob (fileName);
+        //blobify writes the blob to objects
+        b.blobify ();
+        String ogName = b.getName ();
+        String sha1 = b.getSHA1(fileName);
+
+        ind.put (ogName, sha1);
+
+        PrintWriter pw = new PrintWriter (path);
 
         //updates the entire index... a little excessive, but it works
         for (HashMap.Entry <String, String> entry : ind.entrySet ())
