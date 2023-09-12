@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.LineNumberReader;
 import java.io.PrintWriter;
-import java.io.Writer;
 
 public class Tree {
     //Instead of using a local hashmap I use the tree file
@@ -18,7 +16,7 @@ public class Tree {
         initTree();
 
         //appends new str to tree file on a new file in objects directory
-
+        //TO DO: fix empty new line
         try (FileWriter file = new FileWriter("objects/tree", true);
             BufferedWriter b = new BufferedWriter(file);
             PrintWriter p = new PrintWriter(b);){
@@ -42,8 +40,9 @@ public class Tree {
         String sha = "";
         if (str.contains("s")){
             sha = Blob.getSHA1(str);
+        } else {
+            sha = str;
         }
-        sha = str;
 
         //copied the code below from: https://stackoverflow.com/questions/1377279/find-a-line-in-a-file-and-remove-it
         //Made changes in criteria for removal.

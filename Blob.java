@@ -83,12 +83,4 @@ public class Blob
 		return sha1;
 
     }
-
-    public static void main (String [] args) throws IOException
-    {
-        Blob bob = new Blob ("testingFile.txt");
-        //System.out.println (getSHA1 ("testingFile.txt"));
-        bob.blobify ();
-    }
-
 }
