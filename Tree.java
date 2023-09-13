@@ -7,9 +7,14 @@ import java.util.ArrayList;
 public class Tree {
 
     private static ArrayList<String> local;
+    private static String sha;
 
     public Tree(){
         local = new ArrayList<String>();
+    }
+
+    public ArrayList<String> getLocal(){
+        return local;
     }
 
     public void add(String str){
@@ -42,13 +47,16 @@ public class Tree {
         FileWriter tree = new FileWriter("objects/tree");
         BufferedWriter writeToTree = new BufferedWriter(tree);
 
-        for (int i = 0; i < local.size(); i++){
+        for (int i = 0; i < local.size() - 1; i++){
             writeToTree.append(local.get(i) + "\n");
         }
+
+        writeToTree.write(local.get(local.size() - 1));
 
         writeToTree.close();
 
         String sha = Blob.getSHA1("objects/tree");
+        this.sha = sha;
 
         File tree1 = new File("objects/tree");
         File renamed = new File("objects/" + sha);

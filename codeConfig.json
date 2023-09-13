@@ -1,10 +1,10 @@
 [
     {
-        "className": "Git",
+        "className": "Blob",
         "constructorConfigs": [
             {
-                "parameterTypes": [],
-                "values": []
+                "parameterTypes": ["String"],
+                "values": ["fname"]
             }
         ],
         "methodConfigs": [
@@ -14,12 +14,12 @@
                 "values": []
             },
             {
-                "methodName": "add",
+                "methodName": "getSha1",
                 "parameters": [
                     "String"
                 ],
                 "values": [
-                    "__TEST_FILE_NAME__"
+                    "f"
                 ]
             }
         ]

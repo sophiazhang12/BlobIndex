@@ -1,10 +1,12 @@
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.util.Scanner;
 
 
 public class Blob 
@@ -48,9 +50,6 @@ public class Blob
 
         writer.println (sb.toString());
         writer.close();
-
-        
-
     }
 
     //reads in a file's content's and returns the sha1 of it
@@ -81,6 +80,28 @@ public class Blob
 		}
 
 		return sha1;
-
     }
+
+    //NEW METHOD!!!!!!
+    //Reads a file and returns it as a String
+    public static String read(String txt){
+        String content = "";
+        try 
+        {
+            File myObj = new File(txt);
+            Scanner myReader = new Scanner(myObj);
+            while(myReader.hasNextLine()) 
+            {
+              String data = myReader.nextLine();
+              content = content + data;
+            }
+            myReader.close();
+          } 
+        catch (FileNotFoundException e) 
+        {
+            e.printStackTrace();
+        }
+        return content;
+    }
+
 }
