@@ -112,9 +112,11 @@ public class Index
         testList.addBlob ("test.txt");
         testList.addBlob ("test1.txt");
         testList.removeBlob ("test.txt");
-        Tree.add("blob : 94e66df8cd09d410c62d9e0dc59d3a884e458e05 : test.txt");
-        Tree.add("blob : 5d44ddd39d2b59d4cc65fb905841f7d3fbd152ce : test1.txt");
-        Tree.remove("test.txt");
+        Tree test = new Tree();
+        test.add("blob : 94e66df8cd09d410c62d9e0dc59d3a884e458e05 : test.txt");
+        test.add("blob : 5d44ddd39d2b59d4cc65fb905841f7d3fbd152ce : test1.txt");
+        test.remove("test.txt");
+        test.write();
     }
 
 }
