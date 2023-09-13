@@ -5,28 +5,24 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class Tester {
-
-    @BeforeAll
-    static void setUpBeforeClass() throws Exception {
-        /*
-         * Utils.writeStringToFile("junit_example_file_data.txt", "test file contents");
-         * Utils.deleteFile("index");
-         * Utils.deleteDirectory("objects");
-         */
-    }
-
     @AfterAll
-    static void tearDownAfterClass() throws Exception {
-        /*
-         * Utils.deleteFile("junit_example_file_data.txt");
-         * Utils.deleteFile("index");
-         * Utils.deleteDirectory("objects");
-         */
+    //deletes all files after test
+    static void deleteEverything(){
+        File test = new File("test.txt"); 
+        File test1 = new File("test1.txt");
+        File index = new File("index");
+        File objects = new File("objects");
+        test.delete();
+        test1.delete();
+        index.delete();
+        for (File subfile : objects.listFiles()) {
+            subfile.delete();
+        }
+        objects.delete();
     }
 
     @Test
