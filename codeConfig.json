@@ -9,38 +9,55 @@
         ],
         "methodConfigs": [
             {
+                "methodName": "getName",
+                "parameters": [],
+                "values": []
+            },
+            {
+                "methodName": "blobify",
+                "parameters": [],
+                "values": []
+            },
+            {
+                "methodName": "getSHA1",
+                "parameters": ["String"],
+                "values": ["f"]
+            },
+            {
+                "methodName": "read",
+                "parameters": ["String"],
+                "values": ["txt"]
+            }
+        ]
+    },
+    {
+        "className": "Index",
+        "constructorConfigs": [
+            {
+                "parameterTypes": [],
+                "values": []
+            }
+        ],
+        "methodConfigs": [
+            {
                 "methodName": "init",
                 "parameters": [],
                 "values": []
             },
             {
-                "methodName": "getSha1",
-                "parameters": [
-                    "String"
-                ],
-                "values": [
-                    "f"
-                ]
-            }
-        ]
-    },
-    {
-        "className": "Blob",
-        "constructorConfigs": [
+                "methodName": "addBlob",
+                "parameters": ["String"],
+                "values": ["filename"]
+            },
             {
-                "parameterTypes": [
-                    "String"
-                ],
-                "values": [
-                    "__TEST_FILE_NAME__"
-                ]
-            }
-        ],
-        "methodConfigs": [
+                "methodName": "addToPath",
+                "parameters": ["String", "String"],
+                "values": ["filename", "path"]
+            },
             {
-                "methodName": "getSha1",
-                "parameters": [],
-                "values": []
+                "methodName": "removeBlob",
+                "parameters": ["String"],
+                "values": ["filename"]
             }
         ]
     }

@@ -104,19 +104,4 @@ public class Index
         pw.close ();
 
     }
-
-    public static void main (String [] args) throws IOException
-    {
-        Index testList = new Index ();
-        testList.init ();
-        // testList.addBlob ("test.txt");
-        // testList.addBlob ("test1.txt");
-        // testList.removeBlob ("test.txt");
-        Tree test = new Tree();
-        // test.add("blob : 94e66df8cd09d410c62d9e0dc59d3a884e458e05 : test.txt");
-        test.add("blob : 5419b650baae81cd8c5f92a9ad7923fbc43edd2e : test1.txt");
-        // test.remove("test.txt");
-        test.write();
-    }
-
 }
