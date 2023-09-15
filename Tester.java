@@ -5,10 +5,16 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class Tester {
+    @BeforeAll
+    static void createFiles(){
+        Utils.addFiles();
+    }
+
     @AfterAll
     //deletes all files after test
     static void deleteEverything(){
