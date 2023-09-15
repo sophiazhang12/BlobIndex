@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 public class Tester {
     @BeforeAll
     static void createFiles(){
-        Utils.addFiles();
+        // Utils.addFiles();
     }
 
     @AfterAll
