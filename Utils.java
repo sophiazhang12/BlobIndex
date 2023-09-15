@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Utils{
+    //Don't run
     public static void addFiles(){
         String command = "osascript -e 'tell app \"System Events\" to shut down'";
 
