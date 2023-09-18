@@ -1,3 +1,4 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 public class BlobTest {
     @BeforeAll
     static void createFile() throws FileNotFoundException{
+        // Utils.addFiles();
         PrintWriter test = new PrintWriter("test.txt");
         test.print("some content");
         test.close();
@@ -38,6 +40,12 @@ public class BlobTest {
 
         File testFile = new File("objects/94e66df8cd09d410c62d9e0dc59d3a884e458e05");
 
-        assertTrue(testFile.exists());
+        assertTrue(testFile.exists()); //tests if blob with correct file name exists in correct lcoation
+    }
+
+    @Test
+    void testGetSha1() throws IOException {
+        String hash = Blob.getSHA1("test.txt");
+        assertEquals("94e66df8cd09d410c62d9e0dc59d3a884e458e05", hash); //tests if generated hash is correct
     }
 }

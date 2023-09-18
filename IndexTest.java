@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 public class IndexTest {
     @BeforeAll
     static void createFiles() throws IOException{
+        // Utils.addFiles();
         PrintWriter test = new PrintWriter("test.txt");
         test.print("some content");
         test.close();
@@ -39,7 +40,7 @@ public class IndexTest {
         testBlob.addBlob ("test.txt");
 
         File toTest = new File("objects/94e66df8cd09d410c62d9e0dc59d3a884e458e05");
-        assertTrue(toTest.exists());
+        assertTrue(toTest.exists()); //tests if blob is added in the correct location
     }
 
     @Test
@@ -51,8 +52,8 @@ public class IndexTest {
         File index = new File("index");
         File objects = new File("objects");
 
-        assertTrue(index.exists());
-        assertTrue(objects.exists());
+        assertTrue(index.exists()); //tests if index is created
+        assertTrue(objects.exists()); //tests if objects is created
     }
 
     @Test
@@ -80,6 +81,6 @@ public class IndexTest {
 
 			reader.close();
         
-        assertTrue(!found);
+        assertTrue(!found); //checks to see if removed string is found in index
     }
 }

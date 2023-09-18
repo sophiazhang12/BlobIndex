@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 public class TreeTest {
     @BeforeAll
     static void createFilesForTest() throws IOException{
-        Utils.addFiles();
+        // Utils.addFiles();
         PrintWriter test1 = new PrintWriter("test1.txt");
         test1.print("some content");
         test1.close();
@@ -50,8 +50,8 @@ public class TreeTest {
 
         ArrayList<String> localTree= testTree.getLocal();
 
-        assertEquals(test1, localTree.get(0));
-        assertEquals(test2, localTree.get(1));
+        assertEquals(test1, localTree.get(0)); //tests if correct string is created in local ArrayList at position 0
+        assertEquals(test2, localTree.get(1)); //tests if correct string is created in local ArrayList at position 1
     }
 
     @Test
@@ -67,7 +67,7 @@ public class TreeTest {
 
         ArrayList<String> localTree = testTree.getLocal();
 
-        assertEquals(test2, localTree.get(0));
+        assertEquals(test2, localTree.get(0)); //tests if correct string is in position 0 of local ArrayList
     }
 
     @Test 
@@ -86,6 +86,6 @@ public class TreeTest {
         testTree.write();
 
         File testingFile = new File("objects/768a9bdce939a78f02eb69d90aba7c61babb7ff6");
-        assertTrue(testingFile.exists());
+        assertTrue(testingFile.exists()); //tests if correct Tree is made in correct location
     }
 }
