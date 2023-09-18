@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 public class TreeTest {
     @BeforeAll
     static void createFilesForTest() throws IOException{
-        // Utils.addFiles();
+        // Utils.addFiles(); //Mac users, run at your own risk
         PrintWriter test1 = new PrintWriter("test1.txt");
         test1.print("some content");
         test1.close();

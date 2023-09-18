@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 public class IndexTest {
     @BeforeAll
     static void createFiles() throws IOException{
-        Utils.addFiles(); //Mac users, run at your own risk
+        // Utils.addFiles(); //Mac users, run at your own risk
         PrintWriter test = new PrintWriter("test.txt");
         test.print("some content");
         test.close();
