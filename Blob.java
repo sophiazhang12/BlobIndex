@@ -1,10 +1,12 @@
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.util.Scanner;
 
 
 public class Blob 
@@ -22,24 +24,22 @@ public class Blob
         return fileName;
     }
 
-    //turns file on disk into a blob
+    //turns file on disk into a blob and writes to objects
     public void blobify () throws IOException
     {
-        String sha1 = getSHA1 (); //sha1 will be the name of the new file
+        //initlizes before adding
+        Index cool = new Index();
+        cool.init();
+        
+        //All code below is to write to objects file
 
-        //String fName = sha1;
-        File dir = new File ("objects");
-        dir.mkdirs();
-
-        //File actualFile = new File (sha1); //file you write to
-            //objects should become directory, sha1 should become file under directory
+        String sha1 = getSHA1(fileName);
 
         File actualFile = new File ("objects/" + sha1);
-        actualFile.createNewFile();
 
-        PrintWriter writer = new PrintWriter (actualFile.getName());
+        PrintWriter writer = new PrintWriter (actualFile);
 
-        BufferedReader reader = new BufferedReader (new FileReader (fileName));
+        BufferedReader reader = new BufferedReader (new FileReader (getName()));
         StringBuilder sb = new StringBuilder ("");
 
         while (reader.ready())
@@ -50,14 +50,13 @@ public class Blob
 
         writer.println (sb.toString());
         writer.close();
-
     }
 
     //reads in a file's content's and returns the sha1 of it
     //imma be honest i don't really know why this works, but it runs, soooooo
-    public String getSHA1 () throws IOException
+    public static String getSHA1 (String f) throws IOException
     {
-        BufferedReader reader = new BufferedReader (new FileReader (fileName));
+        BufferedReader reader = new BufferedReader (new FileReader (f));
         StringBuilder sb = new StringBuilder ("");
 
         while (reader.ready())
@@ -81,14 +80,27 @@ public class Blob
 		}
 
 		return sha1;
-
     }
 
-    public static void main (String [] args) throws IOException
-    {
-        Blob bob = new Blob ("testingFile.txt");
-        //System.out.println (getSHA1 ("testingFile.txt"));
-        bob.blobify ();
+    //NEW METHOD!!!!!!
+    //Reads a file and returns it as a String
+    public static String read(String txt){
+        String content = "";
+        try 
+        {
+            File myObj = new File(txt);
+            Scanner myReader = new Scanner(myObj);
+            while(myReader.hasNextLine()) 
+            {
+              String data = myReader.nextLine();
+              content = content + data;
+            }
+            myReader.close();
+          } 
+        catch (FileNotFoundException e) 
+        {
+            e.printStackTrace();
+        }
+        return content;
     }
-
 }

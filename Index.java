@@ -23,21 +23,20 @@ public class Index
         File f = new File ("objects");
 
         //if directory doesn't exist, make a new one
-        if (!f.exists() || !f.isDirectory ())
+        if (!f.exists())
         {
-            String dirName = "objects"; /* something to pull specified dir from input */;
-            File dir = new File (dirName);
+            File dir = new File ("objects");
             dir.mkdirs();
         }
 
-        File in = new File ("objects");
+        File in = new File ("index");
 
         //if index doesn't exist, make a new one
         if (!in.exists())
         {
             //in = new File ("objects", "index");
 
-            in = new File ("objects/" + "index");
+            in = new File ("index");
             in.createNewFile();
         }
     }
@@ -45,9 +44,10 @@ public class Index
     public void addBlob (String fileName) throws IOException
     {
         Blob b = new Blob (fileName);
+        //blobify writes the blob to objects
         b.blobify ();
         String ogName = b.getName ();
-        String sha1 = b.getSHA1 ();
+        String sha1 = b.getSHA1(fileName);
 
         ind.put (ogName, sha1);
 
@@ -79,15 +79,4 @@ public class Index
         pw.close ();
 
     }
-
-    public static void main (String [] args) throws IOException
-    {
-        Index testList = new Index ();
-        testList.init ();
-        testList.addBlob ("testingFile.txt");
-        testList.addBlob ("test2.txt");
-        testList.removeBlob ("testingFile.txt");
-        testList.removeBlob ("test2.txt");
-    }
-
 }

@@ -1,0 +1,64 @@
+[
+    {
+        "className": "Blob",
+        "constructorConfigs": [
+            {
+                "parameterTypes": ["String"],
+                "values": ["fname"]
+            }
+        ],
+        "methodConfigs": [
+            {
+                "methodName": "getName",
+                "parameters": [],
+                "values": []
+            },
+            {
+                "methodName": "blobify",
+                "parameters": [],
+                "values": []
+            },
+            {
+                "methodName": "getSHA1",
+                "parameters": ["String"],
+                "values": ["f"]
+            },
+            {
+                "methodName": "read",
+                "parameters": ["String"],
+                "values": ["txt"]
+            }
+        ]
+    },
+    {
+        "className": "Index",
+        "constructorConfigs": [
+            {
+                "parameterTypes": [],
+                "values": []
+            }
+        ],
+        "methodConfigs": [
+            {
+                "methodName": "init",
+                "parameters": [],
+                "values": []
+            },
+            {
+                "methodName": "addBlob",
+                "parameters": ["String"],
+                "values": ["filename"]
+            },
+            {
+                "methodName": "addToPath",
+                "parameters": ["String", "String"],
+                "values": ["filename", "path"]
+            },
+            {
+                "methodName": "removeBlob",
+                "parameters": ["String"],
+                "values": ["filename"]
+            }
+        ]
+    }
+]
