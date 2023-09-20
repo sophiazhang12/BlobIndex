@@ -6,48 +6,52 @@ import java.util.ArrayList;
 
 public class Tree {
 
-    private static ArrayList<String> local;
-    private static String sha;
+    private ArrayList<String> local;
+    private String sha;
 
-    public Tree(){
+    public Tree() {
         local = new ArrayList<String>();
     }
 
-    public ArrayList<String> getLocal(){
+    public String getSha() {
+        return sha;
+    }
+
+    public ArrayList<String> getLocal() {
         return local;
     }
 
-    public void add(String str){
-        if (!local.contains(str)){
+    public void add(String str) {
+        if (!local.contains(str)) {
             local.add(str);
         } else {
             System.out.println("Error: Already in tree");
         }
     }
 
-    public void remove(String str) throws IOException{
-        //checks if input is a file or a sha
-        //if it is a file it converts it to a sha
+    public void remove(String str) throws IOException {
+        // checks if input is a file or a sha
+        // if it is a file it converts it to a sha
         String sha = "";
-        if (str.contains(".")){
+        if (str.contains(".")) {
             sha = Blob.getSHA1(str);
         } else {
             sha = str;
         }
 
-        for (int i = 0; i < local.size(); i++){
-            if (local.get(i).contains(sha)){
+        for (int i = 0; i < local.size(); i++) {
+            if (local.get(i).contains(sha)) {
                 local.remove(i);
             }
         }
     }
 
-    //Writes contents of local ArrayList to Tree file with sha;
-    public void write() throws IOException{
+    // Writes contents of local ArrayList to Tree file with sha;
+    public void write() throws IOException {
         FileWriter tree = new FileWriter("objects/tree");
         BufferedWriter writeToTree = new BufferedWriter(tree);
 
-        for (int i = 0; i < local.size() - 1; i++){
+        for (int i = 0; i < local.size() - 1; i++) {
             writeToTree.append(local.get(i) + "\n");
         }
 
@@ -64,4 +68,3 @@ public class Tree {
         boolean flag = tree1.renameTo(renamed);
     }
 }
-
