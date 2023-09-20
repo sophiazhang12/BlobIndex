@@ -63,7 +63,7 @@ public class Commit {
     }
 
     private void generateSha() throws IOException {
-        String value = (tree.getSha() + parent + next + author + getDate() + summary);
+        String value = (tree.getSha() + parent + author + getDate() + summary);
         System.out.println(value);
         String sha1 = "";
 
