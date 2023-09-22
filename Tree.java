@@ -1,7 +1,11 @@
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class Tree {
@@ -66,5 +70,37 @@ public class Tree {
         File renamed = new File("objects/" + sha);
 
         boolean flag = tree1.renameTo(renamed);
+    }
+
+    public String addDirectory (String directoryPath) throws IOException
+    {
+        BufferedReader reader = new BufferedReader (new FileReader (directoryPath));
+        Tree tr = new Tree ();
+
+        while (reader.ready())
+        {
+            //go through the directory
+            String currFile = reader.readLine();
+
+            Blob bob = new Blob (currFile);
+            String sha = Blob.getSHA1 (currFile);
+
+            tr.add ("blob: " + sha + " : " + currFile);
+        }
+
+        reader.close();
+
+        StringBuilder treeContents = new StringBuilder ("");
+        for (int i = 0; i < local.size(); i++)
+        {
+            treeContents.append (local.get(i));
+        }
+        String SHA1 = Blob.getSHA1(treeContents.toString());
+        
+        PrintWriter pw = new PrintWriter ("objects/" + directoryPath);
+        pw.print (SHA1);
+        pw.close();
+
+        return SHA1; //does this count as a getter??
     }
 }
