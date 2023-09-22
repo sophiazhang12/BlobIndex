@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 public class TreeTest {
     @BeforeAll
-    static void createFilesForTest() throws IOException{
+    static void createFilesForTest() throws IOException {
         // Utils.addFiles(); //Mac users, run at your own risk
         PrintWriter test1 = new PrintWriter("test1.txt");
         test1.print("some content");
@@ -24,9 +24,9 @@ public class TreeTest {
     }
 
     @AfterAll
-    //deletes all files after test
-    static void deleteEverything(){
-        File test = new File("test1.txt"); 
+    // deletes all files after test
+    static void deleteEverything() {
+        File test = new File("test1.txt");
         File test1 = new File("test2.txt");
         File index = new File("index");
         File objects = new File("objects");
@@ -42,22 +42,22 @@ public class TreeTest {
     @Test
     void testAdd() {
         Tree testTree = new Tree();
-        String test1 = "blob : 94e66df8cd09d410c62d9e0dc59d3a884e458e05 : test1.txt"; 
+        String test1 = "blob : 94e66df8cd09d410c62d9e0dc59d3a884e458e05 : test1.txt";
         String test2 = "blob : 4ca8deacbe9ea18450248727171dae4fd03a1e50 : test2.txt";
 
         testTree.add(test1);
         testTree.add(test2);
 
-        ArrayList<String> localTree= testTree.getLocal();
+        ArrayList<String> localTree = testTree.getLocal();
 
-        assertEquals(test1, localTree.get(0)); //tests if correct string is created in local ArrayList at position 0
-        assertEquals(test2, localTree.get(1)); //tests if correct string is created in local ArrayList at position 1
+        assertEquals(test1, localTree.get(0)); // tests if correct string is created in local ArrayList at position 0
+        assertEquals(test2, localTree.get(1)); // tests if correct string is created in local ArrayList at position 1
     }
 
     @Test
     void testRemove() throws IOException {
         Tree testTree = new Tree();
-        String test1 = "blob : 94e66df8cd09d410c62d9e0dc59d3a884e458e05 : test1.txt"; 
+        String test1 = "blob : 94e66df8cd09d410c62d9e0dc59d3a884e458e05 : test1.txt";
         String test2 = "blob : 4ca8deacbe9ea18450248727171dae4fd03a1e50 : test2.txt";
 
         testTree.add(test1);
@@ -67,13 +67,13 @@ public class TreeTest {
 
         ArrayList<String> localTree = testTree.getLocal();
 
-        assertEquals(test2, localTree.get(0)); //tests if correct string is in position 0 of local ArrayList
+        assertEquals(test2, localTree.get(0)); // tests if correct string is in position 0 of local ArrayList
     }
 
-    @Test 
+    @Test
     void testWrite() throws IOException {
         Tree testTree = new Tree();
-        String test1 = "blob : 94e66df8cd09d410c62d9e0dc59d3a884e458e05 : test1.txt"; 
+        String test1 = "blob : 94e66df8cd09d410c62d9e0dc59d3a884e458e05 : test1.txt";
         String test2 = "blob : 4ca8deacbe9ea18450248727171dae4fd03a1e50 : test2.txt";
 
         testTree.add(test1);
@@ -86,6 +86,6 @@ public class TreeTest {
         testTree.write();
 
         File testingFile = new File("objects/768a9bdce939a78f02eb69d90aba7c61babb7ff6");
-        assertTrue(testingFile.exists()); //tests if correct Tree is made in correct location
+        assertTrue(testingFile.exists()); // tests if correct Tree is made in correct location
     }
 }
