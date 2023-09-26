@@ -81,9 +81,9 @@ public class Tree {
         {
             //go through the directory
             String currFile = reader.readLine();
+            String fileContents = Blob.read (currFile);
 
-            Blob bob = new Blob (currFile);
-            String sha = Blob.getSHA1 (currFile);
+            String sha = Blob.getSHA1 (fileContents);
 
             tr.add ("blob: " + sha + " : " + currFile);
         }

@@ -10,6 +10,8 @@ public class PersonalTester {
         Tree tr = new Tree ();
         tr.add ("blob : 0208719e828e84e65fc78ada1a42d6fd98dda797 : example.txt");
         tr.write();
+
+        tr.addDirectory ("documents/doc1");
     }
 
 }
