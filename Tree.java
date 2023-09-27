@@ -72,24 +72,42 @@ public class Tree {
         boolean flag = tree1.renameTo(renamed);
     }
 
+    public void addDirectoryHelper (String directoryPath) throws IOException
+    {
+        Tree tr = new Tree ();
+        File dir = new File (directoryPath);
+        dir.mkdirs();
+
+        //recursion part
+        for (final File fileEntry : dir.listFiles()) {
+            if (fileEntry.isDirectory()) 
+            {
+                Tree childTree = new Tree ();
+                addDirectoryHelper (fileEntry.getAbsolutePath());
+                
+                StringBuilder childContents = new StringBuilder ("");
+                for (int i = 0; i < childTree.getLocal().size(); i++)
+                {
+                    childContents.append (local.get(i));
+                }
+                String childSha = Blob.getSHA1(childContents.toString());
+                Blob childTBlob = new Blob (fileEntry.getName()); //blob it??
+                tr.add ("tree : " + childSha + " : " + fileEntry.getName());
+            } 
+            else 
+            {
+                String fileContents = Blob.read (fileEntry.getAbsolutePath());
+                String sha = Blob.getSHA1 (fileContents);
+                Blob bob = new Blob (fileEntry.getName()); //blob it??
+                tr.add ("blob: " + sha + " : " + fileEntry.getName());
+            }
+        }
+        
+    }
     public String addDirectory (String directoryPath) throws IOException
     {
-        BufferedReader reader = new BufferedReader (new FileReader (directoryPath));
-        Tree tr = new Tree ();
-
-        while (reader.ready())
-        {
-            //go through the directory
-            String currFile = reader.readLine();
-            String fileContents = Blob.read (currFile);
-
-            String sha = Blob.getSHA1 (fileContents);
-
-            tr.add ("blob: " + sha + " : " + currFile);
-        }
-
-        reader.close();
-
+        addDirectoryHelper (directoryPath);
+        //add directory into tree
         StringBuilder treeContents = new StringBuilder ("");
         for (int i = 0; i < local.size(); i++)
         {

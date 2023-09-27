@@ -88,4 +88,95 @@ public class TreeTest {
         File testingFile = new File("objects/768a9bdce939a78f02eb69d90aba7c61babb7ff6");
         assertTrue(testingFile.exists()); // tests if correct Tree is made in correct location
     }
+
+    
+    //tests addDirectory to make sure that it can add one folder with three files
+    @Test
+    void testAddDirectoryFiles () throws IOException {
+        Tree testTree = new Tree ();
+        Index coolio = new Index ();
+        coolio.init();
+        
+        File documents = new File ("documents");
+        documents.mkdirs();
+        documents.createNewFile();
+
+        File doc1 = new File ("documents/doc1");
+        doc1.createNewFile();
+        PrintWriter p1 = new PrintWriter ("documents/doc1");
+        p1.print ("abra");
+        p1.close();
+
+        File doc2 = new File ("documents/doc2");
+        doc2.createNewFile();
+        PrintWriter p2 = new PrintWriter ("documents/doc2");
+        p2.print ("ca");
+        p2.close();
+
+        File doc3 = new File ("documents/doc3");
+        doc3.createNewFile();
+        PrintWriter p3 = new PrintWriter ("documents/doc3");
+        p3.print ("dabra");
+        p3.close();
+        
+        String s = testTree.addDirectory ("documents");
+
+        testTree.write ();
+
+        String expected = "35ed66ebfa2be563d52c2923b13a2dccf84506ec"; //expected sha of the tree
+        assertEquals ("directory values do not match up with expected", expected, s);
+    }
+
+    //tests addDirectory to make sure that it can add one folder with three files and two folder
+    @Test
+    void testAddDirectoryFolders () throws IOException {
+        Tree testTree = new Tree ();
+        Index coolio = new Index ();
+        coolio.init();
+        
+        File documents = new File ("documents");
+        documents.mkdirs();
+        documents.createNewFile();
+
+        File doc1 = new File ("documents/doc1");
+        doc1.createNewFile();
+        PrintWriter p1 = new PrintWriter ("documents/doc1");
+        p1.print ("abra");
+        p1.close();
+
+        File doc2 = new File ("documents/doc2");
+        doc2.createNewFile();
+        PrintWriter p2 = new PrintWriter ("documents/doc2");
+        p2.print ("ca");
+        p2.close();
+
+        File doc3 = new File ("documents/doc3");
+        doc3.createNewFile();
+        PrintWriter p3 = new PrintWriter ("documents/doc3");
+        p3.print ("dabra");
+        p3.close();
+
+        File dir4 = new File ("documents/dir4");
+        dir4.mkdirs();
+        dir4.createNewFile();
+            File doc5 = new File ("documents/dir4/doc5");
+            doc5.createNewFile();
+            PrintWriter p5 = new PrintWriter ("documents/dir4/doc5");
+            p5.print ("hello");
+            p5.close();
+            
+        File doc6 = new File ("documents/doc6");
+        doc6.createNewFile ();
+        PrintWriter p6 = new PrintWriter ("documents/doc6");
+        p6.print ("world");
+        p6.close();
+
+
+        String s = testTree.addDirectory ("documents");
+
+        testTree.write ();
+
+        String expected = "1844da3dbb15e4024d044a35c448776bd3fd0740"; //expected sha of the tree
+        assertEquals ("directory values do not match up with expected", expected, s);
+    }
 }

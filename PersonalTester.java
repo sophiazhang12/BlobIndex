@@ -3,8 +3,8 @@ import java.io.IOException;
 public class PersonalTester {
     public static void main (String [] args) throws IOException
     {
-        // Index ind = new Index ();
-        // ind.init();
+         Index ind = new Index ();
+         ind.init();
         // ind.addBlob ("example.txt");
 
         Tree tr = new Tree ();
@@ -12,6 +12,7 @@ public class PersonalTester {
         tr.write();
 
         tr.addDirectory ("documents/doc1");
+        //fileNotFound??? wdymmmm???
     }
 
 }
