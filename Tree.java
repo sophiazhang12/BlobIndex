@@ -6,7 +6,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Tree {
 
@@ -72,6 +75,56 @@ public class Tree {
         boolean flag = tree1.renameTo(renamed);
     }
 
+    //copied from blob class, written by someone other than me (sophia)
+    // NEW METHOD!!!!!!
+    // Reads a file and returns it as a String
+    public static String read(String txt) {
+        String content = "";
+        try {
+            File myObj = new File(txt);
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                content = content + data;
+                if (myReader.hasNextLine()) {
+                    content += '\n';
+                }
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return content;
+    }
+    public String getSHA1(String f) throws IOException 
+    {
+        BufferedReader reader = new BufferedReader(new FileReader(f));
+        StringBuilder sb = new StringBuilder("");
+
+        while (reader.ready()) {
+            sb.append((char) reader.read());
+        }
+        reader.close();
+
+        String value = sb.toString();
+
+        String sha1 = "";
+
+        // With the java libraries
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-1");
+            digest.reset();
+            digest.update(value.getBytes("utf8"));
+            sha1 = String.format("%040x", new BigInteger(1, digest.digest()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return sha1;
+    }
+
+
+
     public void addDirectoryHelper (String directoryPath) throws IOException
     {
         Tree tr = new Tree ();
@@ -83,21 +136,21 @@ public class Tree {
             if (fileEntry.isDirectory()) 
             {
                 Tree childTree = new Tree ();
-                addDirectoryHelper (fileEntry.getAbsolutePath());
+                addDirectoryHelper (fileEntry.getPath());
                 
-                StringBuilder childContents = new StringBuilder ("");
-                for (int i = 0; i < childTree.getLocal().size(); i++)
-                {
-                    childContents.append (local.get(i));
-                }
-                String childSha = Blob.getSHA1(childContents.toString());
+                // StringBuilder childContents = new StringBuilder ("");
+                // for (int i = 0; i < childTree.getLocal().size(); i++)
+                // {
+                //     childContents.append (local.get(i));
+                // }
+                String childSha = getSHA1(fileEntry.getPath());
                 Blob childTBlob = new Blob (fileEntry.getName()); //blob it??
                 tr.add ("tree : " + childSha + " : " + fileEntry.getName());
             } 
             else 
             {
-                String fileContents = Blob.read (fileEntry.getAbsolutePath());
-                String sha = Blob.getSHA1 (fileContents);
+                //String fileContents = read (fileEntry.getName());
+                String sha = getSHA1 (fileEntry.getPath());
                 Blob bob = new Blob (fileEntry.getName()); //blob it??
                 tr.add ("blob: " + sha + " : " + fileEntry.getName());
             }
@@ -113,12 +166,24 @@ public class Tree {
         {
             treeContents.append (local.get(i));
         }
-        String SHA1 = Blob.getSHA1(treeContents.toString());
         
+        String value = treeContents.toString();
+        String sha1 = "";
+        // With the java libraries
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-1");
+            digest.reset();
+            digest.update(value.getBytes("utf8"));
+            sha1 = String.format("%040x", new BigInteger(1, digest.digest()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //sha1 now has the sha1
+
         PrintWriter pw = new PrintWriter ("objects/" + directoryPath);
-        pw.print (SHA1);
+        pw.print (treeContents);
         pw.close();
 
-        return SHA1; //does this count as a getter??
+        return sha1; //does this count as a getter??
     }
 }
