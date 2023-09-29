@@ -121,8 +121,9 @@ public class TreeTest {
         
         String s = testTree.addDirectory ("documents");
 
-        String expected = "35ed66ebfa2be563d52c2923b13a2dccf84506ec"; //expected sha of the tree
-        assertEquals ("directory values do not match up with expected", expected, s);
+        String expected = "cf36151709f2dbd98213cf78e59d838755fcfbb4"; //expected sha of the tree
+        assertEquals (expected, s);
+
     }
 
     //tests addDirectory to make sure that it can add one folder with three files and two folder

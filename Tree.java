@@ -127,7 +127,7 @@ public class Tree {
 
     public void addDirectoryHelper (String directoryPath) throws IOException
     {
-        Tree tr = new Tree ();
+        //Tree tr = new Tree ();
         File dir = new File (directoryPath);
         dir.mkdirs();
 
@@ -145,26 +145,31 @@ public class Tree {
                 // }
                 String childSha = getSHA1(fileEntry.getPath());
                 Blob childTBlob = new Blob (fileEntry.getName()); //blob it??
-                tr.add ("tree : " + childSha + " : " + fileEntry.getName());
+                //tr.add ("tree : " + childSha + " : " + fileEntry.getName());
+                add ("tree : " + childSha + " : " + fileEntry.getName());
             } 
             else 
             {
                 //String fileContents = read (fileEntry.getName());
                 String sha = getSHA1 (fileEntry.getPath());
                 Blob bob = new Blob (fileEntry.getName()); //blob it??
-                tr.add ("blob: " + sha + " : " + fileEntry.getName());
+                //tr.add ("blob : " + sha + " : " + fileEntry.getName());
+                add ("blob : " + sha + " : " + fileEntry.getName());
             }
         }
         
     }
     public String addDirectory (String directoryPath) throws IOException
     {
+        
         addDirectoryHelper (directoryPath);
         //add directory into tree
         StringBuilder treeContents = new StringBuilder ("");
+        int x = local.size();
         for (int i = 0; i < local.size(); i++)
         {
-            treeContents.append (local.get(i));
+            treeContents.append (local.get(i) + "\n");
+            String str = treeContents.toString();
         }
         
         String value = treeContents.toString();
