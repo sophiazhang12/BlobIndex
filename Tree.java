@@ -143,10 +143,11 @@ public class Tree {
                 // {
                 //     childContents.append (local.get(i));
                 // }
-                String childSha = getSHA1(fileEntry.getPath());
-                Blob childTBlob = new Blob (fileEntry.getName()); //blob it??
+                String childSha = getSHA1(fileEntry.getPath()); //dude how do i fix this
+                // Blob childTBlob = new Blob (fileEntry.getName()); //blob it?? //recently commented out
                 //tr.add ("tree : " + childSha + " : " + fileEntry.getName());
                 add ("tree : " + childSha + " : " + fileEntry.getName());
+                //yo how does recursion work
             } 
             else 
             {
