@@ -51,9 +51,10 @@ public class Commit {
         writer.close();
     }
 
-    private String createTree() throws IOException {
+    private String createTree() throws IOException 
+    {
         tree = new Tree();
-        BufferedReader reader = new BufferedReader ("index");
+        BufferedReader reader = new BufferedReader (new FileReader ("index"));
         
         while (reader.ready())
         {
