@@ -47,7 +47,7 @@ public class Index
         //blobify writes the blob to objects
         b.blobify ();
         String ogName = b.getName ();
-        String sha1 = b.getSHA1(fileName);
+        String sha1 = "blob : " + Blob.getSHA1(fileName);
 
         ind.put (ogName, sha1);
 
@@ -56,12 +56,30 @@ public class Index
         //updates the entire index... a little excessive, but it works
         for (HashMap.Entry <String, String> entry : ind.entrySet ())
             {
-                pw.println (entry.getKey () + " : " + entry.getValue ());
+                pw.println (entry.getValue () + " : " + entry.getKey ());
             }
 
         //pw.println (ogName + " : " + sha1);
 
         //reader.close();
+        pw.close();
+
+    }
+    public void addTree (String fileName) throws IOException
+    {
+        Tree tr = new Tree ();
+        String treeSha = "tree : " + tr.addDirectory (fileName);
+
+        ind.put (fileName, treeSha);
+
+        PrintWriter pw = new PrintWriter ("index");
+
+        //updates the entire index... a little excessive, but it works
+        for (HashMap.Entry <String, String> entry : ind.entrySet ())
+            {
+                pw.println (entry.getValue () + " : " + entry.getKey ());
+            }
+
         pw.close();
 
     }

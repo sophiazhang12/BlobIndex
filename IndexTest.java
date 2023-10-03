@@ -44,6 +44,19 @@ public class IndexTest {
     }
 
     @Test
+    void testAddTree () throws IOException {
+        Index testInd = new Index ();
+        File dir = new File ("dir");
+        dir.mkdirs();
+        dir.createNewFile();
+
+
+        testInd.init();
+        testInd.addTree("dir");
+
+    }
+
+    @Test
     void testInit() throws IOException {
         Index testBlob = new Index();
         testBlob.init();
