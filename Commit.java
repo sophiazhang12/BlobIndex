@@ -1,3 +1,4 @@
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -52,10 +53,21 @@ public class Commit {
 
     private String createTree() throws IOException {
         tree = new Tree();
-        // initializes tree with blank value
-        tree.add("");
+        BufferedReader reader = new BufferedReader ("index");
+        
+        while (reader.ready())
+        {
+            String line = reader.readLine();
+            String namePart = line.substring (line.indexOf (":") + 1);
+            namePart = namePart.substring (0, namePart.indexOf (":") - 1);
+
+            tree.addDirectory (namePart); //maybe this is how it works?}
+        }
+        reader.close();
+        
         File theDir = new File("./objects");
-        if (!theDir.exists()) {
+        if (!theDir.exists()) 
+        {
             theDir.mkdirs();
         }
         tree.write();
