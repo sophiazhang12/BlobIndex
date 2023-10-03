@@ -133,42 +133,42 @@ public class TreeTest {
         Index coolio = new Index ();
         coolio.init();
         
-        File documents1 = new File ("documents1");
-        documents1.mkdirs();
-        documents1.createNewFile();
+        // File documents1 = new File ("documents1");
+        // documents1.mkdirs();
+        // documents1.createNewFile();
 
-        File doc1 = new File ("documents1/doc1");
-        doc1.createNewFile();
-        PrintWriter p1 = new PrintWriter ("documents1/doc1");
-        p1.print ("abra");
-        p1.close();
+        // File doc1 = new File ("documents1/doc1");
+        // doc1.createNewFile();
+        // PrintWriter p1 = new PrintWriter ("documents1/doc1");
+        // p1.print ("abra");
+        // p1.close();
 
-        File doc2 = new File ("documents1/doc2");
-        doc2.createNewFile();
-        PrintWriter p2 = new PrintWriter ("documents1/doc2");
-        p2.print ("ca");
-        p2.close();
+        // File doc2 = new File ("documents1/doc2");
+        // doc2.createNewFile();
+        // PrintWriter p2 = new PrintWriter ("documents1/doc2");
+        // p2.print ("ca");
+        // p2.close();
 
-        File doc3 = new File ("documents1/doc3");
-        doc3.createNewFile();
-        PrintWriter p3 = new PrintWriter ("documents1/doc3");
-        p3.print ("dabra");
-        p3.close();
+        // File doc3 = new File ("documents1/doc3");
+        // doc3.createNewFile();
+        // PrintWriter p3 = new PrintWriter ("documents1/doc3");
+        // p3.print ("dabra");
+        // p3.close();
 
         File dir4 = new File ("documents1/dir4");
         dir4.mkdirs();
         dir4.createNewFile();
-            File doc5 = new File ("documents1/dir4/doc5");
-            doc5.createNewFile();
-            PrintWriter p5 = new PrintWriter ("documents1/dir4/doc5");
-            p5.print ("hello");
-            p5.close();
+            // File doc5 = new File ("documents1/dir4/doc5");
+            // doc5.createNewFile();
+            // PrintWriter p5 = new PrintWriter ("documents1/dir4/doc5");
+            // p5.print ("hello");
+            // p5.close();
             
-        File doc6 = new File ("documents1/doc6");
-        doc6.createNewFile ();
-        PrintWriter p6 = new PrintWriter ("documents1/doc6");
-        p6.print ("world");
-        p6.close();
+        // File doc6 = new File ("documents1/doc6");
+        // doc6.createNewFile ();
+        // PrintWriter p6 = new PrintWriter ("documents1/doc6");
+        // p6.print ("world");
+        // p6.close();
 
 
         String s = testTree.addDirectory ("documents1");
@@ -176,6 +176,6 @@ public class TreeTest {
         testTree.write ();
 
         String expected = "1844da3dbb15e4024d044a35c448776bd3fd0740"; //expected sha of the tree
-        assertEquals ("directory values do not match up with expected", expected, s);
+        assertEquals (expected, s);
     }
 }

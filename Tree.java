@@ -138,15 +138,25 @@ public class Tree {
                 Tree childTree = new Tree ();
                 addDirectoryHelper (fileEntry.getPath());
                 
-                // StringBuilder childContents = new StringBuilder ("");
-                // for (int i = 0; i < childTree.getLocal().size(); i++)
-                // {
-                //     childContents.append (local.get(i));
-                // }
-                String childSha = getSHA1(fileEntry.getPath()); //dude how do i fix this
+                StringBuilder childContents = new StringBuilder ("");
+                for (int i = 0; i < childTree.getLocal().size(); i++)
+                {
+                    childContents.append (local.get(i));
+                }
+                String value = childContents.toString();
+                String childSha1 = "";
+                try {
+                    MessageDigest digest = MessageDigest.getInstance("SHA-1");
+                    digest.reset();
+                    digest.update(value.getBytes("utf8"));
+                    childSha1 = String.format("%040x", new BigInteger(1, digest.digest()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 // Blob childTBlob = new Blob (fileEntry.getName()); //blob it?? //recently commented out
                 //tr.add ("tree : " + childSha + " : " + fileEntry.getName());
-                add ("tree : " + childSha + " : " + fileEntry.getName());
+                add ("tree : " + childSha1 + " : " + fileEntry.getName());
                 //yo how does recursion work
             } 
             else 
@@ -158,6 +168,8 @@ public class Tree {
                 add ("blob : " + sha + " : " + fileEntry.getName());
             }
         }
+
+
         
     }
     public String addDirectory (String directoryPath) throws IOException
