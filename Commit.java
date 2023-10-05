@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigInteger;
@@ -13,8 +14,10 @@ public class Commit {
     String author;
     String time;
     String parent;
-    String sha;
+    String sha; //sha of the tree
     String next;
+    Commit prevCommit;
+    static String prevTrSha;
 
     public Commit(String summary, String author, String parent) throws IOException {
         createTree();
@@ -25,6 +28,7 @@ public class Commit {
         this.next = "";
         generateSha();
         makeFile();
+        prevCommit = this; //so that when you make another commit, this keeps track of the prev one
     }
 
     public Commit(String summary, String author) throws IOException {
@@ -36,6 +40,8 @@ public class Commit {
         this.next = "";
         generateSha();
         makeFile();
+        updatePrevComm();
+        prevCommit = this;
     }
 
     private void makeFile() throws FileNotFoundException {
@@ -53,16 +59,14 @@ public class Commit {
 
     private String createTree() throws IOException 
     {
-        tree = new Tree();
+        Tree tree = new Tree();
         BufferedReader reader = new BufferedReader (new FileReader ("index"));
         
         while (reader.ready())
         {
             String line = reader.readLine();
-            String namePart = line.substring (line.indexOf (":") + 1);
-            namePart = namePart.substring (0, namePart.indexOf (":") - 1);
-
-            tree.addDirectory (namePart); //maybe this is how it works?}
+            
+            tree.add (line); //just copy index over into the tree
         }
         reader.close();
         
@@ -72,6 +76,14 @@ public class Commit {
             theDir.mkdirs();
         }
         tree.write();
+        
+        PrintWriter pw = new PrintWriter ("index");
+        pw.write (""); //empties out the index file
+        pw.close();
+
+        tree.add ("tree : " + prevTrSha);
+
+        prevTrSha = tree.getSha(); //moves backwards pointer for future ref
         return tree.getSha();
     }
 
@@ -99,5 +111,25 @@ public class Commit {
 
     public String getDate() {
         return time;
+    }
+
+    public String givenCommitGetTree (String commitSha) throws IOException
+    {
+        File commFile = new File ("./objects/" + commitSha);
+        if (commFile.exists())
+        {
+            BufferedReader reader = new BufferedReader (new FileReader (commFile.getPath()));
+            String trHash = reader.readLine();
+            reader.close();
+            return trHash;
+
+        }
+        return "No tree found";
+    }
+
+    public void updatePrevComm () throws IOException
+    {
+        prevCommit.next = this.sha;
+
     }
 }

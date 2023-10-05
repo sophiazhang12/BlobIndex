@@ -58,7 +58,7 @@ public class Tree {
         FileWriter tree = new FileWriter("objects/tree");
         BufferedWriter writeToTree = new BufferedWriter(tree);
 
-        for (int i = 0; i < local.size() - 1; i++) {
+        for (int i = 0; i < local.size(); i++) { //got rid of -1,,,,dunno if it works tho
             writeToTree.append(local.get(i) + "\n");
         }
 

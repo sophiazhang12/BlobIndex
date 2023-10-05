@@ -54,6 +54,7 @@ public class IndexTest {
         testInd.init();
         testInd.addTree("dir");
 
+        //didn't do the actual testing yet!!!!!!!!!!!! FUTURE SELF NOTICE THIS
     }
 
     @Test

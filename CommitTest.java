@@ -18,7 +18,9 @@ public class CommitTest {
 
     @Test
     public void testCommitObject() throws IOException {
-        Commit c1 = new Commit("This commit is cool! penis", "BRG", "previousHash");
+        Index ind = new Index();
+        ind.init();
+        Commit c1 = new Commit("This commit is cool", "BRG", "previousHash");
 
         // check if contents is right:
         String content = Blob.read("objects/" + c1.getSha());
@@ -26,7 +28,7 @@ public class CommitTest {
         assertEquals(
                 "da39a3ee5e6b4b0d3255bfef95601890afd80709\n" + "previousHash\n\n" + "BRG\n" + c1.getDate().toString()
                         + '\n'
-                        + "This commit is cool! penis",
+                        + "This commit is cool!",
                 content);
 
         // check if hash is right:
