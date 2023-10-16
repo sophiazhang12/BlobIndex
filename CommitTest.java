@@ -76,6 +76,72 @@ public class CommitTest {
 
     }
 
+    @Test
+    public void createTwoCommit () throws IOException 
+    {
+        Index ind = new Index();
+        ind.init();
+        Tree tr = new Tree ();
+        File file1 = new File ("objects/File1");
+        file1.createNewFile();
+        PrintWriter pw = new PrintWriter (file1);
+        pw.print ("hello");
+        pw.close();
+        File file2 = new File ("objects/File2");
+        file2.createNewFile();
+        PrintWriter pww = new PrintWriter (file2);
+        pww.print ("world");
+        pww.close();
+
+        tr.add (file1.getName());
+        tr.add (file2.getName());
+
+        Commit c1 = new Commit("This commit is cool", "BRG");
+        
+        String c1Contents = c1.makeFile();
+        //check if tree is correct
+        BufferedReader br = new BufferedReader (new FileReader (c1Contents));
+        String trSha = br.readLine(); //first line
+        assertEquals (trSha, "9fc018a74703bf28e8da54dcd368197d01e256c0");
+        
+        //check if prev sha is correct
+        assertEquals (Commit.prevTrSha, null);
+
+        //check if next is correct
+        assertEquals (c1.next, null);
+
+        File file3 = new File ("objects/File3");
+        file1.createNewFile();
+        PrintWriter pi = new PrintWriter (file3);
+        pi.print ("hello");
+        pi.close();
+        File file4 = new File ("objects/File4");
+        file2.createNewFile();
+        PrintWriter piw = new PrintWriter (file4);
+        piw.print ("world");
+        piw.close();
+
+        tr.add (file3.getName());
+        tr.add (file4.getName());
+
+        Commit c2 = new Commit("This commit is cooler", "BRG");
+        
+        //check if tree is correct
+        
+        BufferedReader brr = new BufferedReader (new FileReader (c2.makeFile()));
+
+        String trShaa = brr.readLine(); //first line
+        assertEquals (trShaa, "9fc018a74703bf28e8da54dcd368197d01e256c0");
+        brr.close();
+
+        //check if prev sha is correct
+        assertEquals (Commit.prevTrSha, c1.sha);
+
+        //check if next is correct
+        assertEquals (c1.next, c2.sha); //make sure the next pointer updates
+
+    }
+
     private void deleteDirectory(Path path) throws IOException {
         if (Files.exists(path)) {
             Files.walk(path)

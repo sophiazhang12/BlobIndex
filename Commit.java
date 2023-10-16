@@ -14,7 +14,7 @@ public class Commit {
     String author;
     String time;
     String parent;
-    String sha; //sha of the tree
+    String sha; //sha of the tree -- actually looks more like sha of commit
     String next;
     Commit prevCommit;
     static String prevTrSha;
