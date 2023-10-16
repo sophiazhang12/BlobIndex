@@ -58,11 +58,21 @@ public class Tree {
         FileWriter tree = new FileWriter("objects/tree");
         BufferedWriter writeToTree = new BufferedWriter(tree);
 
-        for (int i = 0; i < local.size(); i++) { //got rid of -1,,,,dunno if it works tho
+        if (local.size() > 0)
+        {
+            for (int i = 0; i < local.size() - 1; i++) {
             writeToTree.append(local.get(i) + "\n");
+            }
+         }
+        else
+        {
+            writeToTree.append ("");
         }
 
-        writeToTree.write(local.get(local.size() - 1));
+        if (local.size() > 0)
+        {
+            writeToTree.write(local.get(local.size() - 1));
+        }
 
         writeToTree.close();
 
@@ -173,8 +183,7 @@ public class Tree {
             }
             return contents;
         }
-
-
+        return "";
         
     }
     public String addDirectory (String directoryPath) throws IOException

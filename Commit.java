@@ -19,6 +19,7 @@ public class Commit {
     Commit prevCommit;
     static String prevTrSha;
 
+
     public Commit(String summary, String author, String parent) throws IOException {
         createTree();
         time = (new Date()).toString();
@@ -44,7 +45,7 @@ public class Commit {
         prevCommit = this;
     }
 
-    private void makeFile() throws FileNotFoundException {
+    public String makeFile() throws FileNotFoundException {
         File actualFile = new File("objects/" + getSha());
         PrintWriter writer = new PrintWriter(actualFile);
         writer.println(tree.getSha());
@@ -55,11 +56,16 @@ public class Commit {
         writer.println(time);
         writer.print(summary);
         writer.close();
+
+        StringBuilder sb = new StringBuilder ("");
+        sb.append (tree.getSha() + "\n" + parent + "\n" + next + "\n" + author + "\n" + time + "\n" + summary);
+        return sb.toString();
+
     }
 
     private String createTree() throws IOException 
     {
-        Tree tree = new Tree();
+        tree = new Tree();
         BufferedReader reader = new BufferedReader (new FileReader ("index"));
         
         while (reader.ready())

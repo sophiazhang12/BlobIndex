@@ -1,6 +1,10 @@
 import static org.junit.Assert.assertEquals;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -36,6 +40,40 @@ public class CommitTest {
         // works
 
         tearDown();
+    }
+
+    @Test
+    public void createOneCommit () throws IOException 
+    {
+        Index ind = new Index();
+        ind.init();
+        Tree tr = new Tree ();
+        File file1 = new File ("objects/File1");
+        file1.createNewFile();
+        PrintWriter pw = new PrintWriter (file1);
+        pw.print ("hello");
+        pw.close();
+        File file2 = new File ("objects/File2");
+        file2.createNewFile();
+        PrintWriter pww = new PrintWriter (file2);
+        pww.print ("world");
+        pww.close();
+
+        tr.add (file1.getName());
+        tr.add (file2.getName());
+
+        Commit c1 = new Commit("This commit is cool", "BRG");
+        
+        //check if tree is correct
+        BufferedReader br = new BufferedReader (new FileReader (c1.makeFile()));
+        String trSha = br.readLine(); //first line
+        assertEquals (trSha, "9fc018a74703bf28e8da54dcd368197d01e256c0");
+        
+        //check if prev sha is correct
+        assertEquals (Commit.prevTrSha, null);
+
+        assertEquals (c1.next, null);
+
     }
 
     private void deleteDirectory(Path path) throws IOException {
