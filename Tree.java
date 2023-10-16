@@ -125,24 +125,22 @@ public class Tree {
 
 
 
-    public void addDirectoryHelper (String directoryPath) throws IOException
+    public String addDirectoryHelper (String directoryPath) throws IOException
     {
+        String contents = "";
         //Tree tr = new Tree ();
         File dir = new File (directoryPath);
         dir.mkdirs();
 
+        File[] fileList = dir.listFiles();
         //recursion part
-        for (final File fileEntry : dir.listFiles()) {
+        for (final File fileEntry : fileList) {
+            
             if (fileEntry.isDirectory()) 
             {
+
                 Tree childTree = new Tree ();
-                addDirectoryHelper (fileEntry.getPath());
-                
-                StringBuilder childContents = new StringBuilder ("");
-                for (int i = 0; i < childTree.getLocal().size(); i++)
-                {
-                    childContents.append (local.get(i));
-                }
+                String childContents = addDirectoryHelper (fileEntry.getPath());
                 String value = childContents.toString();
                 String childSha1 = "";
                 try {
@@ -154,7 +152,12 @@ public class Tree {
                     e.printStackTrace();
                 }
 
-                // Blob childTBlob = new Blob (fileEntry.getName()); //blob it?? //recently commented out
+                File fileInObjects = new File ("objects/" + childSha1);
+
+                PrintWriter pw = new PrintWriter (fileInObjects);
+                pw.print (childContents);
+                pw.close();
+                //Blob childTBlob = new Blob (fileInObjects.getName()); //blob it??
                 //tr.add ("tree : " + childSha + " : " + fileEntry.getName());
                 add ("tree : " + childSha1 + " : " + fileEntry.getName());
                 //yo how does recursion work
@@ -166,7 +169,9 @@ public class Tree {
                 Blob bob = new Blob (fileEntry.getName()); //blob it??
                 //tr.add ("blob : " + sha + " : " + fileEntry.getName());
                 add ("blob : " + sha + " : " + fileEntry.getName());
+                contents += "blob : " + sha + " : " + fileEntry.getName() + "\n"; //extra new line oops
             }
+            return contents;
         }
 
 
@@ -175,16 +180,8 @@ public class Tree {
     public String addDirectory (String directoryPath) throws IOException
     {
         
-        addDirectoryHelper (directoryPath);
+        String treeContents = addDirectoryHelper (directoryPath);
         //add directory into tree
-        StringBuilder treeContents = new StringBuilder ("");
-        int x = local.size();
-        for (int i = 0; i < local.size(); i++)
-        {
-            treeContents.append (local.get(i) + "\n");
-            String str = treeContents.toString();
-        }
-        
         String value = treeContents.toString();
         String sha1 = "";
         // With the java libraries
