@@ -130,7 +130,7 @@ public class CommitTest {
 
         tr.add (file3.getName());
         tr.add (file4.getName());
-        tr.addDirectory ("hello");
+        tr.addDirectory ("hello"); //placeHolder since addDirectoyr is a little scuffed
 
         Commit c2 = new Commit("This commit is cooler", "BRG", c1Sha);
         
@@ -146,9 +146,8 @@ public class CommitTest {
 
         //check if prev sha (of parent commit) is correct
         assertEquals (parentOfC2, c1Sha);
-
         //check if next is correct
-        assertEquals (c1.next, c2.sha); //make sure the next pointer updates
+        assertEquals (c1.next, c2Sha); //make sure the next pointer updates
         brr.close();
 
         tearDown();

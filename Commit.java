@@ -16,7 +16,7 @@ public class Commit {
     String parent;
     String sha; //sha of the tree
     String next;
-    Commit prevCommit;
+    static Commit prevCommit;
     static String prevTrSha;
 
 
@@ -29,10 +29,11 @@ public class Commit {
         this.next = "";
         generateSha();
         makeFile();
+        prevCommit.next = this.makeFile(); //sets next pointer for previous commit
         prevCommit = this; //so that when you make another commit, this keeps track of the prev one
-        prevTrSha = ""; //initialize it to empty
     }
 
+    //first commit
     public Commit(String summary, String author) throws IOException {
         createTree();
         time = (new Date()).toString();
@@ -43,6 +44,7 @@ public class Commit {
         generateSha();
         makeFile();
         prevCommit = this;
+        prevTrSha = ""; //initialize it to empty
     }
 
     public String makeFile() throws FileNotFoundException { //return sha of commit
