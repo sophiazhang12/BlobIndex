@@ -81,14 +81,14 @@ public class Commit {
 
     private String createTree() throws IOException 
     {
-        tree = new Tree();
+        Tree tree1 = new Tree();
         BufferedReader reader = new BufferedReader (new FileReader ("index"));
         
         while (reader.ready())
         {
             String line = reader.readLine();
             
-            tree.add (line); //just copy index over into the tree
+            tree1.add (line); //just copy index over into the tree
         }
         reader.close();
         
@@ -97,15 +97,16 @@ public class Commit {
         {
             theDir.mkdirs();
         }
-        tree.write();
+        tree1.write();
         
         PrintWriter pw = new PrintWriter ("index");
         pw.write (""); //empties out the index file
         pw.close();
 
-        tree.add ("tree : " + prevTrSha);
+        tree1.add ("tree : " + prevTrSha);
 
-        prevTrSha = tree.getSha(); //moves backwards pointer for future ref
+        prevTrSha = tree1.getSha(); //moves backwards pointer for future ref
+        tree = tree1;
         return tree.getSha();
     }
 
