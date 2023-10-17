@@ -63,17 +63,20 @@ public class CommitTest {
         tr.add (file2.getName());
 
         Commit c1 = new Commit("This commit is cool", "BRG");
+        String c1Sha = c1.makeFile();
         
         //check if tree is correct
-        BufferedReader br = new BufferedReader (new FileReader (c1.makeFile()));
+        BufferedReader br = new BufferedReader (new FileReader ("objects/" + c1Sha));
         String trSha = br.readLine(); //first line
-        assertEquals (trSha, "9fc018a74703bf28e8da54dcd368197d01e256c0");
-        
+        assertEquals ("da39a3ee5e6b4b0d3255bfef95601890afd80709", trSha);
+        br.close();
+
         //check if prev sha is correct
-        assertEquals (Commit.prevTrSha, null);
+        assertEquals ("", c1.parent);
 
-        assertEquals (c1.next, null);
+        assertEquals (c1.next, "");
 
+        tearDown();
     }
 
     @Test
@@ -98,17 +101,18 @@ public class CommitTest {
 
         Commit c1 = new Commit("This commit is cool", "BRG");
         
-        String c1Contents = c1.makeFile();
+        String c1Sha = c1.makeFile();
         //check if tree is correct
-        BufferedReader br = new BufferedReader (new FileReader (c1Contents));
+        BufferedReader br = new BufferedReader (new FileReader ("objects/" + c1Sha));
         String trSha = br.readLine(); //first line
-        assertEquals (trSha, "9fc018a74703bf28e8da54dcd368197d01e256c0");
+        br.close();
+        assertEquals (trSha, "da39a3ee5e6b4b0d3255bfef95601890afd80709");
         
         //check if prev sha is correct
-        assertEquals (Commit.prevTrSha, null);
+        assertEquals (c1.parent, "");
 
         //check if next is correct
-        assertEquals (c1.next, null);
+        assertEquals (c1.next, "");
 
         File file3 = new File ("objects/File3");
         file1.createNewFile();
@@ -120,27 +124,37 @@ public class CommitTest {
         PrintWriter piw = new PrintWriter (file4);
         piw.print ("world");
         piw.close();
+        File dir = new File ("objects/dir");
+        dir.mkdirs();
+        dir.createNewFile();
 
         tr.add (file3.getName());
         tr.add (file4.getName());
+        tr.addDirectory ("hello");
 
-        Commit c2 = new Commit("This commit is cooler", "BRG");
+        Commit c2 = new Commit("This commit is cooler", "BRG", c1Sha);
         
         //check if tree is correct
         
-        BufferedReader brr = new BufferedReader (new FileReader (c2.makeFile()));
+        String c2Sha = c2.makeFile (); //the sha of c2 commit itself
+        BufferedReader brr = new BufferedReader (new FileReader ("objects/" + c2Sha));
 
         String trShaa = brr.readLine(); //first line
-        assertEquals (trShaa, "9fc018a74703bf28e8da54dcd368197d01e256c0");
-        brr.close();
+        assertEquals (trShaa, "da39a3ee5e6b4b0d3255bfef95601890afd80709");
 
-        //check if prev sha is correct
-        assertEquals (Commit.prevTrSha, c1.sha);
+        String parentOfC2 = brr.readLine();
+
+        //check if prev sha (of parent commit) is correct
+        assertEquals (parentOfC2, c1Sha);
 
         //check if next is correct
         assertEquals (c1.next, c2.sha); //make sure the next pointer updates
+        brr.close();
 
+        tearDown();
     }
+
+
 
     private void deleteDirectory(Path path) throws IOException {
         if (Files.exists(path)) {

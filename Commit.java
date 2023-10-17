@@ -14,7 +14,7 @@ public class Commit {
     String author;
     String time;
     String parent;
-    String sha; //sha of the tree -- actually looks more like sha of commit
+    String sha; //sha of the tree
     String next;
     Commit prevCommit;
     static String prevTrSha;
@@ -30,6 +30,7 @@ public class Commit {
         generateSha();
         makeFile();
         prevCommit = this; //so that when you make another commit, this keeps track of the prev one
+        prevTrSha = ""; //initialize it to empty
     }
 
     public Commit(String summary, String author) throws IOException {
@@ -41,12 +42,27 @@ public class Commit {
         this.next = "";
         generateSha();
         makeFile();
-        updatePrevComm();
         prevCommit = this;
     }
 
-    public String makeFile() throws FileNotFoundException {
-        File actualFile = new File("objects/" + getSha());
+    public String makeFile() throws FileNotFoundException { //return sha of commit
+
+        StringBuilder sb = new StringBuilder ("");
+        sb.append (tree.getSha() + "\n" + parent + "\n" + next + "\n" + author + "\n" + time + "\n" + summary);
+        String value = sb.toString();
+        String sha1 = "";
+
+        // With the java libraries
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-1");
+            digest.reset();
+            digest.update(value.getBytes("utf8"));
+            sha1 = String.format("%040x", new BigInteger(1, digest.digest()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        File actualFile = new File("objects/" + sha1);
         PrintWriter writer = new PrintWriter(actualFile);
         writer.println(tree.getSha());
         writer.println(parent);
@@ -57,9 +73,7 @@ public class Commit {
         writer.print(summary);
         writer.close();
 
-        StringBuilder sb = new StringBuilder ("");
-        sb.append (tree.getSha() + "\n" + parent + "\n" + next + "\n" + author + "\n" + time + "\n" + summary);
-        return sb.toString();
+        return sha1;
 
     }
 
@@ -94,7 +108,7 @@ public class Commit {
     }
 
     private void generateSha() throws IOException {
-        String value = (tree.getSha() + parent + author + getDate() + summary);
+        String value = (tree.getSha() + "\n" + parent + "\n" + author + "\n" + getDate() + "\n" + summary);
         System.out.println(value);
         String sha1 = "";
 
@@ -138,4 +152,5 @@ public class Commit {
         prevCommit.next = this.sha;
 
     }
+
 }
